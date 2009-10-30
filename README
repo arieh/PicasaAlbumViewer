@@ -1,0 +1,16 @@
+PicacaAlbumViewer v1.0
+========================
+This package is made out of 2 parts which can be used seperatly:
+1. a PHP Class intended for extracting a Picasa Album's image information
+2. a Mootools class to create a Thumbnail list out of a UL of images (for now all LIs must be of the same size).
+* the demo uses the smoothbox Mootools library to create the Litebox effect
+
+the two can obviously be used seperatly, but the ThumbSlides class must be used with a fixed LI width to function properly, 
+and comes with a collection of css files to match some of Google's thumbnail sizes (34,64,72). it's recomended to use the croped version of the images 
+for best design.
+
+Google Album ID
+=================
+the album viewer uses the rss id of a google album. to get it, extract it from the album's rss feed:
+for this url:http://picasaweb.google.com/data/feed/base/user/arieh.glazer/albumid/5346936535986674945?alt=rss&kind=photo&hl=en_US
+the id is:5346936535986674945 (the number after 'alubumid/')
