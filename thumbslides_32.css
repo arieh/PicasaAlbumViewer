@@ -31,7 +31,7 @@ ul.thumbs-list{
 	vertical-align:middle;
 	padding:8px 0;
 }
-	.list-container .subcontainer{
+	.subcontainer{
 		z-index:50;
 		width:252px;
 		float:left;

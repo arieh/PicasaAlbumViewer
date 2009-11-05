@@ -28,7 +28,7 @@ ul.thumbs-list{
 	margin:0 auto;
 	vertical-align:middle;
 }
-	.list-container .subcontainer{
+	.subcontainer{
 		z-index:50;
 		width:532px;
 		float:left;
