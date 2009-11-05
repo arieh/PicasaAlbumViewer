@@ -146,14 +146,13 @@ var ThumbSlides = new Class({
 		var self = this;
 		json.each(function(jsn){
 			var li = new Element('li'),
-				a  = new Element('a',{href:jsn.source,'class':'smoothbox'}),
+				a  = new Element('a',{href:jsn.source,'class':'smoothbox',title:jsn.description}),
 				
 				img = new Element('img',{
 					src    : jsn.url,
 					width  : jsn.width,
 					height : jsn.height,
-					alt    : jsn.description,
-					title  : jsn.description
+					alt    : jsn.description
 				});
 			li.adopt(a.adopt(img));
 			self.thumbsList.adopt(li);
