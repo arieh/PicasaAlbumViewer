@@ -9,7 +9,7 @@ $thumbsize = isset($_GET['thumb'])? $_GET['thumb'] : '64c';
 $thumbsize = in_array($thumbsize,PicasaAlbum::$allowed_thumbsize) ? $thumbsize : '64c';
 
 $album = new PicasaAlbum($user,$aID,$thumbsize);
-
+$img_list = array();
 ?>
 <!DOCTYPE html 
      PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -46,26 +46,34 @@ $album = new PicasaAlbum($user,$aID,$thumbsize);
 			<dd><a href='demo.php?thumb=72u'>Thumbs Size: 72px</a></dd>
 	</dl>
 </fieldset>
-	
+<noscript>	
 <ul id='album_list'>
-<?php while ($image = $album->getImage()):?>
+<?php while ($image = $album->getImage()):
+	?>
 	<li><a href='<?php echo $image->getSourceImageUrl();?>' class='smoothbox'>
 		<img src='<?php echo $image->getUrl();?>' 
 			height='<?php echo $image->getHeight();?>' 
 			width='<?php echo $image->getWidth();?>' 
 			alt='album image'
 			/></a></li>
-<?php endwhile; ?>
+<?php 
+$img_list[]=$image->toArray();	
+endwhile; ?>
 </ul>
+</noscript>
+
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/mootools/1.2.1/mootools-yui-compressed.js'></script>
 <script type='text/javascript' src='../thumbslides.js'></script>
 <script type='text/javascript' src='smoothbox.js'></script>
 <script type='text/javascript'>
 document.addEvent('domready',function(){
-	var slides = new ThumbSlides($('album_list'),{thumbSize:<?php echo substr($thumbsize,0,2);?>});
-	TB_init()
+	var slides = new ThumbSlides(<?php echo json_encode($img_list);?>,{thumbSize:<?php echo substr($thumbsize,0,2);?>});
+	TB_init();
+	$('prev').addEvent('click',function(){slides.prev(3)})
+	$('next').addEvent('click',function(){slides.next(3)})
 })
 </script>
+<a id='prev'>prev</a>&nbsp;<a id='next'>next</a>
 </body>
 </html>
 <?php ob_flush();?>

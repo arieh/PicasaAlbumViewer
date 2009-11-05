@@ -28,13 +28,13 @@ ul.thumbs-list{
 	margin:0 auto;
 	vertical-align:middle;
 }
-	.list-container .subcontainer{
+	.subcontainer{
 		z-index:50;
 		width:476px;
 		float:left;
 		overflow:hidden;
 		height:64px;
-		position:relative
+		position:relative;
 	}
 	
 	.list-container button{

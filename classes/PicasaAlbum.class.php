@@ -75,15 +75,16 @@ class PicasaAlbum implements Iterator{
 			$srcimg= $feed->content->attributes();
 			
 			$description = $feed->xpath('./media:group/media:description');
-			
-			if(is_string($description[0]) && str_word_count($description[0]) > 0){ 
-				$img['description'] = $description[0]; 
+			$title = $feed->xpath('./media:group/media:title');
+			$description = (string)$description[0];
+			if(is_string($description) && strlen($description) > 0){ 
+				$img['description'] = $description; 
 			}else{
-				$img['description'] = $feed->title;
+				$img['description'] = (string)$feed->title;
 			}
+			
 			$img['image']=$image;
 			$img['src_img']=$srcimg;
-			$img['description']=$description;
 			$this->images[]=$img;
 		}
 	}
