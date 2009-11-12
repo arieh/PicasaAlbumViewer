@@ -59,13 +59,13 @@ var ThumbSlides = new Class({
 		this.leftButton = new Element('button',{'class':'leftButton','disabled':'disabled'}),
 		this.rightButton = new Element('button',{'class':'rightButton'}),
 		this.container = new Element('div',{'class':'list-container'});
-		
+		$$('body')[0].adopt(this.subContainer);
 		var old_margin = this.subContainer.getStyle('margin-left');
 		
 		this.subContainer.setStyles({
 			'margin-left':-9999
 		})
-		$$('body')[0].adopt(this.subContainer);
+		
 		this.rowWidth = this.subContainer.getSize().x.toInt();
 		this.subContainer.setStyles({
 			'margin-left':old_margin
@@ -86,7 +86,6 @@ var ThumbSlides = new Class({
 	},
 	generateBox : function(){
 		var self = this,
-			lic =0,
 			lis = this.list.getElements('li'),
 			subContainer = this.subContainer;
 		
@@ -99,14 +98,13 @@ var ThumbSlides = new Class({
 				targetImage = a.get('href'),
 				desc = img.get('alt');
 			self.thumbsList.adopt(li.adopt(a));
-			lic++;
 		});
 
 		this.list.destroy();
 		
-		this.setEvents(lic);
+		this.setEvents();
 	},
-	setEvents : function(li_count){
+	setEvents : function(){
 		var self=this,
 			lis = this.container.getElements('li'),
 			rightButton = this.rightButton,
@@ -115,8 +113,8 @@ var ThumbSlides = new Class({
 			
 		self.liMargins = lis[0].getStyle('margin-right').toInt()+lis[0].getStyle('margin-left').toInt();
 		
-		this.list_width = li_count * (self.options.thumbSize + self.liMargins ); 
-
+		
+		this.list_width = lis.length * (self.options.thumbSize + self.liMargins ); 
 		width_dif = this.list_width % self.rowWidth + (self.options.thumbSize + self.liMargins) ;//if the list width dosent exactly fit the container
 		
 		self.thumbsList.setStyle('width',this.list_width);
@@ -154,7 +152,7 @@ var ThumbSlides = new Class({
 			li.adopt(a.adopt(img));
 			self.thumbsList.adopt(li);
 		});
-		this.setEvents(json.length);
+		this.setEvents();
 	},
 	next : function(thumb_number){
 		var self=this, 
