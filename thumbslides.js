@@ -60,18 +60,15 @@ var ThumbSlides = new Class({
 		this.rightButton = new Element('button',{'class':'rightButton'}),
 		this.container = new Element('div',{'class':'list-container'});
 		
-		var old_left = this.subContainer.getStyle('left'),
-			old_position = this.subContainer.getStyle('position');
+		var old_margin = this.subContainer.getStyle('margin-left');
 		
 		this.subContainer.setStyles({
-			'position':'absolute',
-			'left':-9999
+			'margin-left':-9999
 		})
 		$$('body')[0].adopt(this.subContainer);
 		this.rowWidth = this.subContainer.getSize().x.toInt();
 		this.subContainer.setStyles({
-			'position' : old_position,
-			'left':old_left
+			'margin-left':old_margin
 		});
 
 		this.container.adopt(this.leftButton,this.subContainer,this.rightButton).setStyle('visibility','hidden');
