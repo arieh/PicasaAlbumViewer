@@ -55,17 +55,19 @@ class PicasaAlbum implements Iterator{
 	/**
 	 * constructor
 	 * @param string $user a valid google account user name
-	 * @param string $album a Picasa Album id
+	 * @param string $album a Picasa Album rss
 	 * @param string $thumbsize the wanted thumbnail size
 	 * @param string $maxsize the maximun allowed sise for the full-size images
 	 * 
 	 * @access public
 	 */
-	public function __construct($user,$album,$thumbsize='72c',$maxsize=720){
+	public function __construct($user,$rss,$thumbsize='72c',$maxsize=720){
 		if (!in_array($thumbsize,self::$allowed_thumbsize)) throw new PicasaAlbumException("The Requested Thumbsize $thumbsize isn't allowed");
 		if (!in_array($maxsize,self::$allowed_maxsize)) throw new PicasaAlbumException("The Requeted Max-Imagesize $maxsize is invald");
-		
-		$raw_file = file_get_contents('http://picasaweb.google.com/data/feed/api/user/' .$user. '/albumid/' .$album. '?kind=photo&access=public&thumbsize=' .$thumbsize . '&imgmax=' .$maxsize);
+		$pttrn = "/albumid\/([0-9]*)/";
+		preg_match($pttrn,$rss,$matches);
+		$album_id = $matches[1];
+		$raw_file = file_get_contents('http://picasaweb.google.com/data/feed/api/user/' .$user. '/albumid/' .$album_id. '?kind=photo&access=public&thumbsize=' .$thumbsize . '&imgmax=' .$maxsize);
 		$this->xml = new SimpleXMLElement($raw_file);
 		$this->xml->registerXPathNamespace('media', 'http://search.yahoo.com/mrss/');
 		foreach($this->xml->entry as $feed){ 

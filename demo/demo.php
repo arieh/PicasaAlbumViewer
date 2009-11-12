@@ -1,14 +1,13 @@
 <?php
-ob_start();
-require_once('../classes/PicasaAlbum.class.php');
 
-$user = 'arieh.glazer';
-$aID = '5346936535986674945';
+require_once dirname(__FILE__) . "/../classes/PicasaAlbum.class.php";
+$user='arieh.glazer';
+$rss = "http://picasaweb.google.com/data/feed/base/user/arieh.glazer/albumid/5346936535986674945?alt=rss&kind=photo&hl=en_US";
 
 $thumbsize = isset($_GET['thumb'])? $_GET['thumb'] : '64c';
 $thumbsize = in_array($thumbsize,PicasaAlbum::$allowed_thumbsize) ? $thumbsize : '64c';
 
-$album = new PicasaAlbum($user,$aID,$thumbsize);
+$album = new PicasaAlbum($user,$rss,$thumbsize);
 $img_list = array();
 ?>
 <!DOCTYPE html 
@@ -76,4 +75,3 @@ document.addEvent('domready',function(){
 <a id='prev'>prev</a>&nbsp;<a id='next'>next</a>
 </body>
 </html>
-<?php ob_flush();?>

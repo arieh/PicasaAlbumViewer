@@ -1,4 +1,4 @@
-PicacaAlbumViewer v1.0
+PicacaAlbumViewer v1.1
 ========================
 This package is made out of 2 parts which can be used seperatly:
 1. a PHP Class intended for extracting a Picasa Album's image information
@@ -11,6 +11,4 @@ for best design.
 
 Google Album ID
 =================
-the album viewer uses the rss id of a google album. to get it, extract it from the album's rss feed:
-for this url:http://picasaweb.google.com/data/feed/base/user/arieh.glazer/albumid/5346936535986674945?alt=rss&kind=photo&hl=en_US
-the id is:5346936535986674945 (the number after 'alubumid/')
+as of 1.1, the album viewer uses the rss of the album to retrieve the messages.
