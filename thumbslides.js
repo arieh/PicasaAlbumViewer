@@ -55,8 +55,7 @@ var ThumbSlides = new Class({
 		this.setEvents();
 		this.options.parent.adopt(this.container);
 	},
-	setBox : function(){
-		
+	setBox : function(){		
 		this.subContainer = new Element('div',{'class':'subcontainer'}),
 		this.leftButton = new Element('button',{'class':'leftButton','disabled':'disabled'}),
 		this.rightButton = new Element('button',{'class':'rightButton'}),
@@ -79,12 +78,6 @@ var ThumbSlides = new Class({
 		this.containerSize = this.container.getSize();
 		
 		this.subContainer.adopt(this.thumbsList);
-	},
-	getThumbs : function(){
-		var anchors = this.list.getElements('a');
-		var list =[];
-		anchors.each(function(a){list.push(new this.Thumb(a));});
-		return list;
 	},
 	generateBox : function(){
 		var self = this,
@@ -121,6 +114,9 @@ var ThumbSlides = new Class({
 		self.container.setStyle('visibility','visible');
 	},
 	setDimentions : function(){
+		/**
+		 * TODO find a better way to measure the li margins other than to clone the entire widget
+		 */
 		var self = this,
 			clone = this.container.clone(),
 			lis  = clone.getElements('li');
@@ -133,14 +129,6 @@ var ThumbSlides = new Class({
 		
 		self.thumbsList.setStyle('width',this.list_width);
 	},
-	Thumb : new Class({
-		initialize : function(a){
-			this.targetImage = a.get('href');
-			var img = a.getElements('img')[0];
-			this.thumb = img.get('src');
-			this.description = img.get('alt');
-		}
-	}),
 	generateFromJSON : function(json){
 		var self = this;
 		json.each(function(jsn){
@@ -175,7 +163,7 @@ var ThumbSlides = new Class({
 			self.thumbsList.tween('left',left-movement);
 				
 			if (this.leftButton.get('disabled')) this.leftButton.removeClass('disabled').removeAttribute('disabled');
-			if (movement<self.rowWidth && typeof(thumb_number) == 'undefiend'){
+			if (movement<self.rowWidth && !(thumb_number)){
 				self.last = true;
 				this.rightButton.set('disabled','disabled');
 			}
