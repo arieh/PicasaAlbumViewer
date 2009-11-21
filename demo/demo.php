@@ -66,7 +66,7 @@ endwhile; ?>
 <script type='text/javascript' src='smoothbox.js'></script>
 <script type='text/javascript'>
 document.addEvent('domready',function(){
-	var slides = new ThumbSlides(<?php echo json_encode($img_list);?>,{thumbSize:<?php echo substr($thumbsize,0,2);?>});
+	var slides = new ThumbSlides(<?php echo json_encode($img_list);?>,{thumbSize:<?php echo substr($thumbsize,0,2);?>,movement:7});
 	TB_init();
 	$('prev').addEvent('click',function(){slides.prev(3)})
 	$('next').addEvent('click',function(){slides.next(3)})

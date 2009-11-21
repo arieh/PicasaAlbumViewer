@@ -51,6 +51,8 @@ var ThumbSlides = new Class({
 		if (this.options.parent == $empty){
 			this.options.parent = $$('body')[0];
 		}
+		this.setDimentions();
+		this.setEvents();
 		this.options.parent.adopt(this.container);
 	},
 	setBox : function(){
@@ -101,23 +103,12 @@ var ThumbSlides = new Class({
 		});
 
 		this.list.destroy();
-		
-		this.setEvents();
 	},
 	setEvents : function(){
 		var self=this,
-			lis = this.container.getElements('li'),
 			rightButton = this.rightButton,
 			leftButton = this.leftButton,
 			subContainer = this.subContrainer;
-			
-		self.liMargins = lis[0].getStyle('margin-right').toInt()+lis[0].getStyle('margin-left').toInt();
-		
-		
-		this.list_width = lis.length * (self.options.thumbSize + self.liMargins ); 
-		width_dif = this.list_width % self.rowWidth + (self.options.thumbSize + self.liMargins) ;//if the list width dosent exactly fit the container
-		
-		self.thumbsList.setStyle('width',this.list_width);
 		
 		rightButton.addEvent('click',function(){
 			self.next(self.options.movement);
@@ -128,6 +119,19 @@ var ThumbSlides = new Class({
 		});
 		
 		self.container.setStyle('visibility','visible');
+	},
+	setDimentions : function(){
+		var self = this,
+			clone = this.container.clone(),
+			lis  = clone.getElements('li');
+		clone.setStyle('left',-99999);
+		$$('body')[0].adopt(clone);
+		self.liMargins = lis[0].getStyle('margin-right').toInt()+lis[0].getStyle('margin-left').toInt();
+		
+		this.list_width = lis.length * (self.options.thumbSize + self.liMargins ); 
+		width_dif = this.list_width % self.rowWidth + (self.options.thumbSize + self.liMargins) ;//if the list width dosent exactly fit the container
+		
+		self.thumbsList.setStyle('width',this.list_width);
 	},
 	Thumb : new Class({
 		initialize : function(a){
@@ -152,7 +156,6 @@ var ThumbSlides = new Class({
 			li.adopt(a.adopt(img));
 			self.thumbsList.adopt(li);
 		});
-		this.setEvents();
 	},
 	next : function(thumb_number){
 		var self=this, 
