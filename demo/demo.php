@@ -49,7 +49,7 @@ $img_list = array();
 <ul id='album_list'>
 <?php while ($image = $album->getImage()):
 	?>
-	<li><a href='<?php echo $image->getSourceImageUrl();?>' class='smoothbox'>
+	<li class='thumb'><a href='<?php echo $image->getSourceImageUrl();?>' class='smoothbox'>
 		<img src='<?php echo $image->getUrl();?>' 
 			height='<?php echo $image->getHeight();?>' 
 			width='<?php echo $image->getWidth();?>' 
@@ -66,7 +66,7 @@ endwhile; ?>
 <script type='text/javascript' src='smoothbox.js'></script>
 <script type='text/javascript'>
 document.addEvent('domready',function(){
-	var slides = new ThumbSlides(<?php echo json_encode($img_list);?>,{thumbSize:<?php echo substr($thumbsize,0,2);?>/*,movement:7*/});
+	var slides = new ThumbSlides(<?php echo json_encode($img_list);?>,{thumbSize:<?php echo substr($thumbsize,0,2);?>,useItemClass:false});
 	TB_init();
 	$('prev').addEvent('click',function(){slides.prev(3)})
 	$('next').addEvent('click',function(){slides.next(3)})

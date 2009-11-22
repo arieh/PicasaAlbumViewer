@@ -24,9 +24,11 @@ var ThumbSlides = new Class({
 	list : $empty,
 	listClass : ['thumbs-list'],
 	options : {
-		thumbSize : 48,
-		parent : $empty,
-		movement : false
+		thumbSize : 48,         //what is the thumbnail size
+		parent : $$('body')[0], //what is the list parent (default to body)
+		movement : false,       //how many tiles to move (deafult is to list visible width)
+		itemClass : 'thumb',    //what is the class of the list items 
+		useItemClass : true     //whether or not to use the itemClass to calculate list-items dimentions (false is very resource-expensive)
 	},
 	thumbsList :$empty,
 	liMargins : 4,
@@ -38,6 +40,7 @@ var ThumbSlides = new Class({
 	containerSize : $empty,
 	last : false,
 	rowWidht : 0,
+	moving:false,
 	initialize : function(list,options){
 		this.setOptions(options);
 		this.setBox();
@@ -47,10 +50,7 @@ var ThumbSlides = new Class({
 			this.generateBox();
 		}
 		else this.generateFromJSON(list);
-		
-		if (this.options.parent == $empty){
-			this.options.parent = $$('body')[0];
-		}
+
 		this.setDimentions();
 		this.setEvents();
 		this.options.parent.adopt(this.container);
@@ -114,15 +114,22 @@ var ThumbSlides = new Class({
 		self.container.setStyle('visibility','visible');
 	},
 	setDimentions : function(){
-		/**
-		 * TODO find a better way to measure the li margins other than to clone the entire widget
-		 */
 		var self = this,
-			clone = this.container.clone(),
-			lis  = clone.getElements('li');
-		clone.setStyle('left',-99999);
-		$$('body')[0].adopt(clone);
-		self.liMargins = lis[0].getStyle('margin-right').toInt()+lis[0].getStyle('margin-left').toInt();
+			lis = this.container.getElements(this.options.usetItemClass ? '.'+this.options.itemClass : 'li'),
+			clone;
+		if (this.options.useItemClass){
+			 clone = new Element('li',{'class':this.options.itemClass})
+			 clone.setStyle('left',-9999);
+			$$('body')[0].adopt(clone);
+			
+		}else{
+			clone = this.container.clone();
+			clone.setStyle('left',-9999);
+			$$('body')[0].adopt(clone);
+			clone = clone.getElement('li');
+		}
+		self.liMargins = clone.getStyle('margin-right').toInt()+clone.getStyle('margin-left').toInt();
+		clone.destroy();
 		
 		this.list_width = lis.length * (self.options.thumbSize + self.liMargins ); 
 		width_dif = this.list_width % self.rowWidth + (self.options.thumbSize + self.liMargins) ;//if the list width dosent exactly fit the container
@@ -132,9 +139,8 @@ var ThumbSlides = new Class({
 	generateFromJSON : function(json){
 		var self = this;
 		json.each(function(jsn){
-			var li = new Element('li'),
+			var li = new Element('li', {'class': 'thumb'}),
 				a  = new Element('a',{href:jsn.source,'class':'smoothbox',title:jsn.description}),
-				
 				img = new Element('img',{
 					src    : jsn.url,
 					width  : jsn.width,

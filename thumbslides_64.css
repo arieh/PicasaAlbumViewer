@@ -10,7 +10,7 @@ ul.thumbs-list{
 	line-height:64px;
 	background:#aaa;
 }
-	ul.thumbs-list li{
+	li.thumb{
 		float:left;
 		margin:0 2px;
 		width:64px;

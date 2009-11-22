@@ -11,7 +11,7 @@ ul.thumbs-list{
 	line-height:48px;
 	background:#aaa;
 }
-	ul.thumbs-list li{
+	li.thumb{
 		float:left;
 		margin:0 2px;
 		width:48px;
@@ -19,6 +19,7 @@ ul.thumbs-list{
 		overflow:hidden;
 		text-align:center;
 	}
+	
 	ul.thumbs-list li img{vertical-align:middle;}
 
 .list-container{
