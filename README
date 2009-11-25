@@ -12,3 +12,12 @@ for best design.
 Google Album ID
 =================
 as of 1.1, the album viewer uses the rss of the album to retrieve the messages.
+
+About Thumbslides JS:
+======================
+the class is very dependant on class names. specifically, in order to save resources, the class expects
+list items will have an assigned class holding their dimentions you can change the class name with itemClass, 
+or choose not to use ths feature with the useItemClass flag (NOTE - this will be very expensive - as it will clone the entire list).
+the other class which requiers strict definitions is the subcontainer class, and specificaly its width. 
+
+you can expirement with the CSS files to check what is tweakable and what is not
